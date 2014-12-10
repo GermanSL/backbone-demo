@@ -11,7 +11,7 @@ Demo.App = {          //App holding all application objects.(routers, collection
       
       var me = this;            //Saving current context variable.
       
-      //Asigning backbone object to Dp.App.
+      //Asigning backbone object to Demo.App.
       this.router = new this.Routers.Router();
       this.userListView = new this.Views.UserList();
       this.userFormView = new this.Views.UserForm();
