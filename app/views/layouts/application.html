@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Designer Pages Demo</title>
+  
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js" type="text/javascript"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
+  
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+</head>
+<body>
+
+  <!-- Main Application Container-->
+  <div class="main-container">
+    <h1> Backbone Demo <span class="current-user">German.Solis</span> </h1>
+    <hr />
+    <div class="content"> </div>     <!-- Application Content -->
+  </div>
+  <!-- Dialog Helper Container -->
+  <div class="dialog-container"> </div>
+
+  <!-- Start Application -->
+  <script type="text/javascript">
+     Demo.App.init();
+  </script>
+
+  <!-- TEMPLATES -->  
+  
+  <script type="text/template" id="dialog_template">
+    <div class="overlay">
+      <div class="dialog">
+        <legend> <%%= title %> </legend> 
+        <div>
+          <%%= msg %>
+        </div>
+        <ul>
+          <li> <span class="btn-ok dp-button"> Ok </span> </li>
+          <li> <span class="btn-cancel dp-button"> Cancel </span </li>
+        </ul>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/template" id="user_list_template">
+    
+    <legend> Users <a href="#/new" id="new_user_btn" class="dp-button">New</a> </legend> 
+    
+    <ul class="row row-header">
+     <li> Name </li> 
+     <li> Lastname </li>
+     <li> Username </li>
+     <li> Age </li>
+     <li> Phone </li>
+     <li> </li>
+    </ul>
+    
+    <ul id="users_list" class="listing">
+      <%% _.each(users, function(user) { %>
+      <li> 
+         <ul class="row row-data"> 
+            <li> <%%= Demo.App.htmlEncode(user.get('name')) %> </li> 
+            <li> <%%= Demo.App.htmlEncode(user.get('lastname')) %> </li>
+            <li> <%%= Demo.App.htmlEncode(user.get('username')) %> </li>
+            <li> <%%= Demo.App.htmlEncode(user.get('age')) %> </li>
+            <li> <%%= Demo.App.htmlEncode(user.get('phone')) %> </li>
+            <li> 
+               <a class="dp-button dp-button-mini" href="#/edit/<%%= user.id %>">Edit</a>
+               <a class="dp-button dp-button-mini delete" data-userid='<%%= user.id %>' href="">Delete</a>
+            </li>
+         </ul> 
+      </li>
+      <%% }); %>
+    </ul>
+    
+  </script>
+
+  <script type="text/template" id="user_template">
+    
+    <form class="user-form">
+      <legend> <%%= user ? 'Edit' : 'New' %> User </legend>
+      <label> Name</label>
+      <input name="name" type="text" value="<%%= user ? user.get('name') : '' %>">
+      <label> Lastname</label>
+      <input name="lastname" type="text" value="<%%= user ? user.get('lastname') : '' %>">
+      <label> Age</label>
+      <input name="age" type="text" value="<%%= user ? user.get('age') : '' %>">
+      <label> Phone</label>
+      <input name="phone" type="text" value="<%%= user ? user.get('phone') : '' %>">
+      <hr />
+      <button type="submit" class="btn dp-button"><%%= user ? 'Update' : 'Create' %></button>
+      <button class="back-btn dp-button">Back</button>
+      <%% if(user) { %>
+      <input type="hidden" name="id" value="<%%= user.id %>" />
+      <%% }; %>
+    </form>
+    
+</script>
+
+</body>
+</html> 
